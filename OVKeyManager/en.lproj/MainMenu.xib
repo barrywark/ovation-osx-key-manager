@@ -3400,12 +3400,17 @@
 					<object class="IBAccessibilityAttribute" key="AccessibilityDescription">
 						<string key="name">AccessibilityDescription</string>
 						<reference key="object" ref="284004441"/>
-						<string key="accessibilityValue">Shared Encryption Key</string>
+						<string key="accessibilityValue">Shared encryption key</string>
+					</object>
+					<object class="IBAccessibilityAttribute" key="AccessibilityHelp">
+						<string key="name">AccessibilityHelp</string>
+						<reference key="object" ref="284004441"/>
+						<string key="accessibilityValue">Enter the shared encryption key for the licensed group.</string>
 					</object>
 					<object class="IBToolTipAttribute" key="ToolTip">
 						<string key="name">ToolTip</string>
 						<reference key="object" ref="284004441"/>
-						<string key="toolTip">Shared Encryption Key</string>
+						<string key="toolTip">Shared encryption key</string>
 					</object>
 				</dictionary>
 				<boolean value="NO" key="1055.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
@@ -3546,7 +3551,7 @@
 					<object class="IBAccessibilityAttribute" key="AccessibilityDescription">
 						<string key="name">AccessibilityDescription</string>
 						<reference key="object" ref="154575685"/>
-						<string key="accessibilityValue">Licensed Institution</string>
+						<string key="accessibilityValue">Licensed institution</string>
 					</object>
 					<object class="IBAccessibilityAttribute" key="AccessibilityHelp">
 						<string key="name">AccessibilityHelp</string>
@@ -3556,7 +3561,7 @@
 					<object class="IBToolTipAttribute" key="ToolTip">
 						<string key="name">ToolTip</string>
 						<reference key="object" ref="154575685"/>
-						<string key="toolTip">Licensed Institution</string>
+						<string key="toolTip">Licensed institution</string>
 					</object>
 				</dictionary>
 				<array class="NSMutableArray" key="541.IBNSViewMetadataConstraints">
@@ -3578,7 +3583,7 @@
 					<object class="IBAccessibilityAttribute" key="AccessibilityDescription">
 						<string key="name">AccessibilityDescription</string>
 						<reference key="object" ref="19234713"/>
-						<string key="accessibilityValue">Licensed Group</string>
+						<string key="accessibilityValue">Licensed group</string>
 					</object>
 					<object class="IBAccessibilityAttribute" key="AccessibilityHelp">
 						<string key="name">AccessibilityHelp</string>
@@ -3588,12 +3593,29 @@
 					<object class="IBToolTipAttribute" key="ToolTip">
 						<string key="name">ToolTip</string>
 						<reference key="object" ref="19234713"/>
-						<string key="toolTip">Licensed Group</string>
+						<string key="toolTip">Licensed group</string>
 					</object>
 				</dictionary>
 				<boolean value="NO" key="593.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="593.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="595.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<dictionary class="NSMutableDictionary" key="712.IBAttributePlaceholdersKey">
+					<object class="IBAccessibilityAttribute" key="AccessibilityDescription">
+						<string key="name">AccessibilityDescription</string>
+						<reference key="object" ref="308305741"/>
+						<string key="accessibilityValue">Update shared key</string>
+					</object>
+					<object class="IBAccessibilityAttribute" key="AccessibilityHelp">
+						<string key="name">AccessibilityHelp</string>
+						<reference key="object" ref="308305741"/>
+						<string key="accessibilityValue">Updates the shared encryption key in the System and login keychains.</string>
+					</object>
+					<object class="IBToolTipAttribute" key="ToolTip">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="308305741"/>
+						<string key="toolTip">Update shared key</string>
+					</object>
+				</dictionary>
 				<boolean value="NO" key="712.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="712.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="713.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
