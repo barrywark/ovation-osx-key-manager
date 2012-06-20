@@ -32,5 +32,9 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SMPrivilegedExecutables</key>
+	<dict/>
+	<key>com.physionconsulting.OVKeyManagerHelper</key>
+	<string>identifier com.physionconsulting.OVKeyManagerHelper and certificate leaf[subject.CN] = &quot;Mac Developer: Barry Wark (85KFBWPN4D)&quot;</string>
 </dict>
 </plist>
