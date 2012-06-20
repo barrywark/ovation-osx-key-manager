@@ -19,6 +19,7 @@
 @property (nonatomic,strong) NSString * institution;
 @property (nonatomic,strong) NSString * group;
 @property (nonatomic,strong) NSString * sharedKey;
+@property (nonatomic,strong) NSString * statusText;
 
 @property (nonatomic,strong) id<PHCSharedKeyRepository> keyRepository;
 

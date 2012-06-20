@@ -26,6 +26,7 @@
 @synthesize institution;
 @synthesize group;
 @synthesize sharedKey;
+@synthesize statusText;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {   
@@ -36,7 +37,7 @@
 }
 
 - (NSString*)updateActionTitle {
-    return NSLocalizedString(@"Add", @"Add a new key");
+    return NSLocalizedString(@"Update", @"Update key");
 }
 
 - (IBAction)addUpdateKey:(id)sender {
@@ -45,8 +46,15 @@
                                                                          group:self.group 
                                                                        product:@"Ovation"
                                                                     licenseKey:nil];
+    
+    self.statusText = nil;
+    self.keyRepositoryError = nil;
+    
     [self.keyRepository addKey:self.sharedKey 
                     forLicense:licenseInfo
+                       success:^() {
+                           self.statusText = NSLocalizedString(@"Key updated succesfully", @"Shared Encryption Key Added/Updated Succesfully");
+                       }
                          error:^(NSError *err) {
                              self.keyRepositoryError = err; 
                          }];

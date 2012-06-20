@@ -15,7 +15,11 @@
 - (id)initWithLabel:(NSString*)label connectionErrorCallback:(repository_error_callback)err;
 
 - (NSSet*)keys:(repository_error_callback)error;
-- (void)addKey:(NSString*)key forLicense:(id<OVLicenseInfo>)licenseInfo error:(repository_error_callback)err;
-- (void)updateKey:(NSString*)key forLicense:(id<OVLicenseInfo>)licenseInfo error:(repository_error_callback)err;
+- (void)addKey:(NSString*)key forLicense:(id<OVLicenseInfo>)licenseInfo 
+       success:(void (^)(void))success
+         error:(repository_error_callback)err;
+- (void)updateKey:(NSString*)key forLicense:(id<OVLicenseInfo>)licenseInfo 
+          success:(void (^)(void))success
+            error:(repository_error_callback)err;
 
 @end

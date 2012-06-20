@@ -133,7 +133,9 @@ const char * SERVICE_NAME = "com.physionconsulting.OVKeyManagerHelper";
     return YES;
 }
 
-- (void)addKey:(NSString*)key forLicense:(id<OVLicenseInfo>)licenseInfo error:(repository_error_callback)err
+- (void)addKey:(NSString*)key forLicense:(id<OVLicenseInfo>)licenseInfo 
+       success:(void (^)(void))successBlock
+         error:(repository_error_callback)err
 {
     NSParameterAssert(licenseInfo != nil);
 
@@ -157,8 +159,11 @@ const char * SERVICE_NAME = "com.physionconsulting.OVKeyManagerHelper";
         BOOL success = xpc_dictionary_get_bool(event, RESULT_STATUS_KEY);
         if(!success) {
             
-            NSString * errMsg = [NSString stringWithCString:xpc_dictionary_get_string(event, RESULT_ERR_MSG_KEY)
-                                                    encoding:NSUTF8StringEncoding];
+            const char * errMsgCString = xpc_dictionary_get_string(event, RESULT_ERR_MSG_KEY);
+            
+            
+            NSString * errMsg = errMsgCString != NULL ? [NSString stringWithCString:errMsgCString
+                                                                           encoding:NSUTF8StringEncoding] : NSLocalizedString(@"Unknown error", @"Unknown error");
             
             NSError *error = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
                                                  code:KEYCHAIN_ERROR
@@ -166,13 +171,14 @@ const char * SERVICE_NAME = "com.physionconsulting.OVKeyManagerHelper";
                                                                                   forKey:NSLocalizedDescriptionKey]];
             dispatch_async(dispatch_get_main_queue(), ^() { err(error); });
         } else {
-            dispatch_async(dispatch_get_main_queue(), ^() { [[NSApplication sharedApplication] terminate:self]; });
+            dispatch_async(dispatch_get_main_queue(), successBlock);
         }
     });
 }
 
-- (void)updateKey:(NSString*)key forLicense:(id)sharedKey error:(repository_error_callback)err
-{
+- (void)updateKey:(NSString*)key forLicense:(id<OVLicenseInfo>)licenseInfo 
+          success:(void (^)(void))success
+            error:(repository_error_callback)err {
     
 }
 
