@@ -1616,7 +1616,7 @@
 						<string key="label">enabled: self.institution</string>
 						<reference key="source" ref="308305741"/>
 						<reference key="destination" ref="976324537"/>
-						<object class="NSNibBindingConnector" key="connector" id="328153645">
+						<object class="NSNibBindingConnector" key="connector" id="365433883">
 							<reference key="NSSource" ref="308305741"/>
 							<reference key="NSDestination" ref="976324537"/>
 							<string key="NSLabel">enabled: self.institution</string>
@@ -1636,7 +1636,7 @@
 						<string key="label">enabled2: self.group</string>
 						<reference key="source" ref="308305741"/>
 						<reference key="destination" ref="976324537"/>
-						<object class="NSNibBindingConnector" key="connector" id="672692942">
+						<object class="NSNibBindingConnector" key="connector" id="748749528">
 							<reference key="NSSource" ref="308305741"/>
 							<reference key="NSDestination" ref="976324537"/>
 							<string key="NSLabel">enabled2: self.group</string>
@@ -1649,7 +1649,7 @@
 								<integer value="-1" key="NSNullPlaceholder"/>
 								<string key="NSValueTransformerName">NSIsNotNil</string>
 							</dictionary>
-							<reference key="NSPreviousConnector" ref="328153645"/>
+							<reference key="NSPreviousConnector" ref="365433883"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -1673,7 +1673,7 @@
 								<integer value="-1" key="NSNullPlaceholder"/>
 								<string key="NSValueTransformerName">NSIsNotNil</string>
 							</dictionary>
-							<reference key="NSPreviousConnector" ref="672692942"/>
+							<reference key="NSPreviousConnector" ref="748749528"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
