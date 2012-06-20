@@ -591,7 +591,7 @@
 		4CE27B401592264A005E86AD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OVKeyManager.app/Contents/MacOS/OVKeyManager";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Ovation Key Manager.app/Contents/MacOS/Ovation Key Manager";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OVKeyManager/OVKeyManager-Prefix.pch";
@@ -605,7 +605,7 @@
 		4CE27B411592264A005E86AD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OVKeyManager.app/Contents/MacOS/OVKeyManager";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Ovation Key Manager.app/Contents/MacOS/Ovation Key Manager";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OVKeyManager/OVKeyManager-Prefix.pch";

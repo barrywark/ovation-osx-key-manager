@@ -9,7 +9,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 #import "OVKeyManagerTestBase.h"
 
-@interface AddKeyTest : OVKeyMangaerTestBase
+@interface AddKeyTest : OVKeyManagerTestBase
 
 @property (nonatomic) BOOL addCalled;
 
