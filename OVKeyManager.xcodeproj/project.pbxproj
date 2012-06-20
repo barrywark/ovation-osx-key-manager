@@ -68,7 +68,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4CE27B0A1592264A005E86AD /* OVKeyManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OVKeyManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C01865A15922BA2008C0642 /* OVKeyManagerHelper-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OVKeyManagerHelper-Info.plist"; sourceTree = "<group>"; };
+		4C01865B15922BA2008C0642 /* OVKeyManagerHelper-Launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OVKeyManagerHelper-Launchd.plist"; sourceTree = "<group>"; };
+		4CE27B0A1592264A005E86AD /* Ovation Key Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ovation Key Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE27B0E1592264A005E86AD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CE27B111592264A005E86AD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		4CE27B121592264A005E86AD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -93,8 +95,6 @@
 		4CE27B51159226DF005E86AD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4CE27B54159226DF005E86AD /* OVKeyManagerHelper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OVKeyManagerHelper-Prefix.pch"; sourceTree = "<group>"; };
 		4CE27B55159226DF005E86AD /* OVKeyManagerHelper.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = OVKeyManagerHelper.1; sourceTree = "<group>"; };
-		4CE27B5A15922764005E86AD /* OVKeyManager-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OVKeyManager-Info.plist"; sourceTree = "<group>"; };
-		4CE27B5B15922764005E86AD /* OVKeyManager-Launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OVKeyManager-Launchd.plist"; sourceTree = "<group>"; };
 		4CE27B611592285F005E86AD /* PHCErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHCErrors.h; sourceTree = "<group>"; };
 		4CE27B621592285F005E86AD /* PHCErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHCErrors.m; sourceTree = "<group>"; };
 		4CE27B631592285F005E86AD /* PHCSharedKeyRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHCSharedKeyRepository.h; sourceTree = "<group>"; };
@@ -138,8 +138,6 @@
 		4CE27AFF1592264A005E86AD = {
 			isa = PBXGroup;
 			children = (
-				4CE27B6C15922891005E86AD /* ServiceManagement.framework */,
-				4CE27B6A1592288B005E86AD /* Security.framework */,
 				4CE27B50159226DF005E86AD /* OVKeyManagerHelper */,
 				4CE27B141592264A005E86AD /* OVKeyManager */,
 				4CE27B311592264A005E86AD /* OVKeyManagerTests */,
@@ -151,7 +149,7 @@
 		4CE27B0B1592264A005E86AD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CE27B0A1592264A005E86AD /* OVKeyManager.app */,
+				4CE27B0A1592264A005E86AD /* Ovation Key Manager.app */,
 				4CE27B2B1592264A005E86AD /* OVKeyManagerTests.octest */,
 				4CE27B4C159226DF005E86AD /* com.physionconsulting.OVKeyManagerHelper */,
 			);
@@ -172,6 +170,8 @@
 		4CE27B101592264A005E86AD /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CE27B6C15922891005E86AD /* ServiceManagement.framework */,
+				4CE27B6A1592288B005E86AD /* Security.framework */,
 				4CE27B111592264A005E86AD /* AppKit.framework */,
 				4CE27B121592264A005E86AD /* CoreData.framework */,
 				4CE27B131592264A005E86AD /* Foundation.framework */,
@@ -237,8 +237,8 @@
 		4CE27B53159226DF005E86AD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4CE27B5A15922764005E86AD /* OVKeyManager-Info.plist */,
-				4CE27B5B15922764005E86AD /* OVKeyManager-Launchd.plist */,
+				4C01865A15922BA2008C0642 /* OVKeyManagerHelper-Info.plist */,
+				4C01865B15922BA2008C0642 /* OVKeyManagerHelper-Launchd.plist */,
 				4CE27B54159226DF005E86AD /* OVKeyManagerHelper-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -282,7 +282,7 @@
 			);
 			name = OVKeyManager;
 			productName = OVKeyManager;
-			productReference = 4CE27B0A1592264A005E86AD /* OVKeyManager.app */;
+			productReference = 4CE27B0A1592264A005E86AD /* Ovation Key Manager.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4CE27B2A1592264A005E86AD /* OVKeyManagerTests */ = {
@@ -524,7 +524,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OVKeyManager/OVKeyManager-Prefix.pch";
 				INFOPLIST_FILE = "OVKeyManager/OVKeyManager-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Ovation Key Manager";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -537,7 +537,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OVKeyManager/OVKeyManager-Prefix.pch";
 				INFOPLIST_FILE = "OVKeyManager/OVKeyManager-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Ovation Key Manager";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -627,6 +627,7 @@
 				4CE27B3E1592264A005E86AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4CE27B3F1592264A005E86AD /* Build configuration list for PBXNativeTarget "OVKeyManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -635,6 +636,7 @@
 				4CE27B411592264A005E86AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4CE27B57159226DF005E86AD /* Build configuration list for PBXNativeTarget "com.physionconsulting.OVKeyManagerHelper" */ = {
 			isa = XCConfigurationList;
@@ -643,6 +645,7 @@
 				4CE27B59159226DF005E86AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
