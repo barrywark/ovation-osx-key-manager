@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C01866F15923A5A008C0642 /* key.ico in Resources */ = {isa = PBXBuildFile; fileRef = 4C01866E15923A5A008C0642 /* key.ico */; };
 		4CE27B0F1592264A005E86AD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE27B0E1592264A005E86AD /* Cocoa.framework */; };
 		4CE27B191592264A005E86AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CE27B171592264A005E86AD /* InfoPlist.strings */; };
 		4CE27B1B1592264A005E86AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B1A1592264A005E86AD /* main.m */; };
@@ -70,6 +71,7 @@
 /* Begin PBXFileReference section */
 		4C01865A15922BA2008C0642 /* OVKeyManagerHelper-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OVKeyManagerHelper-Info.plist"; sourceTree = "<group>"; };
 		4C01865B15922BA2008C0642 /* OVKeyManagerHelper-Launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OVKeyManagerHelper-Launchd.plist"; sourceTree = "<group>"; };
+		4C01866E15923A5A008C0642 /* key.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = key.ico; sourceTree = "<group>"; };
 		4CE27B0A1592264A005E86AD /* Ovation Key Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ovation Key Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE27B0E1592264A005E86AD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CE27B111592264A005E86AD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -138,6 +140,7 @@
 		4CE27AFF1592264A005E86AD = {
 			isa = PBXGroup;
 			children = (
+				4C01866E15923A5A008C0642 /* key.ico */,
 				4CE27B50159226DF005E86AD /* OVKeyManagerHelper */,
 				4CE27B141592264A005E86AD /* OVKeyManager */,
 				4CE27B311592264A005E86AD /* OVKeyManagerTests */,
@@ -357,6 +360,7 @@
 				4CE27B191592264A005E86AD /* InfoPlist.strings in Resources */,
 				4CE27B1F1592264A005E86AD /* Credits.rtf in Resources */,
 				4CE27B251592264A005E86AD /* MainMenu.xib in Resources */,
+				4C01866F15923A5A008C0642 /* key.ico in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
