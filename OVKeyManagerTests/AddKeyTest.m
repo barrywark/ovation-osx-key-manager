@@ -29,7 +29,7 @@
     appDelegate.group = @"group";
     appDelegate.sharedKey = @"sharedKey";
     
-    appDelegate.keyRepository = self;
+    appDelegate.systemKeyRepository = self;
     
     [appDelegate addUpdateKey:self]; 
     
@@ -45,7 +45,7 @@
     appDelegate.group = @"group";
     appDelegate.sharedKey = @"sharedKey";
     
-    appDelegate.keyRepository = self;
+    appDelegate.systemKeyRepository = self;
     
     [appDelegate addUpdateKey:self]; 
     
@@ -61,7 +61,7 @@
     appDelegate.group = @"group";
     appDelegate.sharedKey = @"sharedKey";
     
-    appDelegate.keyRepository = self;
+    appDelegate.systemKeyRepository = self;
     
     [appDelegate addUpdateKey:self]; 
     

@@ -15,6 +15,8 @@
 @property (strong,nonatomic) NSString * product;
 @property (strong,nonatomic) NSString * licenseKey;
 
+@property (nonatomic,readonly) NSString * keyID;
+
 @end
 
 @interface OVLicenseInfo : NSObject <OVLicenseInfo>
@@ -28,5 +30,7 @@
 @property (strong,nonatomic) NSString * group;
 @property (strong,nonatomic) NSString * product;
 @property (strong,nonatomic) NSString * licenseKey;
+
+@property (nonatomic,readonly) NSString * keyID;
 
 @end

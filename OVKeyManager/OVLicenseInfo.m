@@ -29,4 +29,9 @@
     
     return self;
 }
+
+- (NSString*)keyID {
+    return [NSString stringWithFormat:@"%@::%@::%@", self.institution, self.group, self.product];
+}
+
 @end
