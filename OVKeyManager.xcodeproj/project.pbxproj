@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		4C01866F15923A5A008C0642 /* key.ico in Resources */ = {isa = PBXBuildFile; fileRef = 4C01866E15923A5A008C0642 /* key.ico */; };
+		4C01867215923F95008C0642 /* AddKeyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C01867115923F95008C0642 /* AddKeyTest.m */; };
+		4C0186731592408E008C0642 /* PHCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B211592264A005E86AD /* PHCAppDelegate.m */; };
+		4C01867B1592440A008C0642 /* PHCErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B621592285F005E86AD /* PHCErrors.m */; };
+		4C01867C159245C3008C0642 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B51159226DF005E86AD /* main.m */; };
+		4C01867D159245EB008C0642 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE27B6A1592288B005E86AD /* Security.framework */; };
+		4C1D09C0159251440063AB2A /* OVKeyManagerHelperAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D09BF159251440063AB2A /* OVKeyManagerHelperAPI.m */; };
+		4C1D09C1159251440063AB2A /* OVKeyManagerHelperAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D09BF159251440063AB2A /* OVKeyManagerHelperAPI.m */; };
+		4C1D09CD1592562E0063AB2A /* OVLicenseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D09CC1592562E0063AB2A /* OVLicenseInfo.m */; };
 		4CE27B0F1592264A005E86AD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE27B0E1592264A005E86AD /* Cocoa.framework */; };
 		4CE27B191592264A005E86AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CE27B171592264A005E86AD /* InfoPlist.strings */; };
 		4CE27B1B1592264A005E86AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B1A1592264A005E86AD /* main.m */; };
@@ -17,9 +25,8 @@
 		4CE27B2D1592264A005E86AD /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE27B2C1592264A005E86AD /* SenTestingKit.framework */; };
 		4CE27B2E1592264A005E86AD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE27B0E1592264A005E86AD /* Cocoa.framework */; };
 		4CE27B361592264A005E86AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CE27B341592264A005E86AD /* InfoPlist.strings */; };
-		4CE27B391592264A005E86AD /* OVKeyManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B381592264A005E86AD /* OVKeyManagerTests.m */; };
+		4CE27B391592264A005E86AD /* OVKeyManagerTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B381592264A005E86AD /* OVKeyManagerTestBase.m */; };
 		4CE27B4F159226DF005E86AD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE27B4E159226DF005E86AD /* Foundation.framework */; };
-		4CE27B52159226DF005E86AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B51159226DF005E86AD /* main.m */; };
 		4CE27B56159226DF005E86AD /* OVKeyManagerHelper.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CE27B55159226DF005E86AD /* OVKeyManagerHelper.1 */; };
 		4CE27B5E159227FB005E86AD /* com.physionconsulting.OVKeyManagerHelper in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CE27B4C159226DF005E86AD /* com.physionconsulting.OVKeyManagerHelper */; };
 		4CE27B661592285F005E86AD /* PHCErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B621592285F005E86AD /* PHCErrors.m */; };
@@ -71,7 +78,13 @@
 /* Begin PBXFileReference section */
 		4C01865A15922BA2008C0642 /* OVKeyManagerHelper-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OVKeyManagerHelper-Info.plist"; sourceTree = "<group>"; };
 		4C01865B15922BA2008C0642 /* OVKeyManagerHelper-Launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OVKeyManagerHelper-Launchd.plist"; sourceTree = "<group>"; };
-		4C01866E15923A5A008C0642 /* key.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = key.ico; sourceTree = "<group>"; };
+		4C01866E15923A5A008C0642 /* key.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = key.ico; path = ../key.ico; sourceTree = "<group>"; };
+		4C01867015923F95008C0642 /* AddKeyTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddKeyTest.h; sourceTree = "<group>"; };
+		4C01867115923F95008C0642 /* AddKeyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddKeyTest.m; sourceTree = "<group>"; };
+		4C1D09BE159251440063AB2A /* OVKeyManagerHelperAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OVKeyManagerHelperAPI.h; path = OVKeyManagerHelper/OVKeyManagerHelperAPI.h; sourceTree = "<group>"; };
+		4C1D09BF159251440063AB2A /* OVKeyManagerHelperAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OVKeyManagerHelperAPI.m; path = OVKeyManagerHelper/OVKeyManagerHelperAPI.m; sourceTree = "<group>"; };
+		4C1D09C9159254710063AB2A /* OVLicenseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OVLicenseInfo.h; sourceTree = "<group>"; };
+		4C1D09CC1592562E0063AB2A /* OVLicenseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OVLicenseInfo.m; sourceTree = "<group>"; };
 		4CE27B0A1592264A005E86AD /* Ovation Key Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ovation Key Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE27B0E1592264A005E86AD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CE27B111592264A005E86AD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -89,8 +102,8 @@
 		4CE27B2C1592264A005E86AD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		4CE27B331592264A005E86AD /* OVKeyManagerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OVKeyManagerTests-Info.plist"; sourceTree = "<group>"; };
 		4CE27B351592264A005E86AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4CE27B371592264A005E86AD /* OVKeyManagerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OVKeyManagerTests.h; sourceTree = "<group>"; };
-		4CE27B381592264A005E86AD /* OVKeyManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OVKeyManagerTests.m; sourceTree = "<group>"; };
+		4CE27B371592264A005E86AD /* OVKeyManagerTestBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OVKeyManagerTestBase.h; sourceTree = "<group>"; };
+		4CE27B381592264A005E86AD /* OVKeyManagerTestBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OVKeyManagerTestBase.m; sourceTree = "<group>"; };
 		4CE27B4715922670005E86AD /* OVKeyManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OVKeyManager.entitlements; sourceTree = "<group>"; };
 		4CE27B4C159226DF005E86AD /* com.physionconsulting.OVKeyManagerHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.physionconsulting.OVKeyManagerHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE27B4E159226DF005E86AD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -130,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C01867D159245EB008C0642 /* Security.framework in Frameworks */,
 				4CE27B4F159226DF005E86AD /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,10 +151,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C1D09C3159251490063AB2A /* XPC API */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D09BE159251440063AB2A /* OVKeyManagerHelperAPI.h */,
+				4C1D09BF159251440063AB2A /* OVKeyManagerHelperAPI.m */,
+			);
+			name = "XPC API";
+			sourceTree = "<group>";
+		};
+		4C1D09CB159256140063AB2A /* OVLicenseInfo */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D09C9159254710063AB2A /* OVLicenseInfo.h */,
+				4C1D09CC1592562E0063AB2A /* OVLicenseInfo.m */,
+			);
+			name = OVLicenseInfo;
+			sourceTree = "<group>";
+		};
 		4CE27AFF1592264A005E86AD = {
 			isa = PBXGroup;
 			children = (
-				4C01866E15923A5A008C0642 /* key.ico */,
+				4C1D09C3159251490063AB2A /* XPC API */,
 				4CE27B50159226DF005E86AD /* OVKeyManagerHelper */,
 				4CE27B141592264A005E86AD /* OVKeyManager */,
 				4CE27B311592264A005E86AD /* OVKeyManagerTests */,
@@ -187,6 +219,7 @@
 			children = (
 				4CE27B6815922863005E86AD /* PHCErrors */,
 				4CE27B6915922871005E86AD /* Key Repository */,
+				4C1D09CB159256140063AB2A /* OVLicenseInfo */,
 				4CE27B201592264A005E86AD /* PHCAppDelegate.h */,
 				4CE27B211592264A005E86AD /* PHCAppDelegate.m */,
 				4CE27B231592264A005E86AD /* MainMenu.xib */,
@@ -198,6 +231,7 @@
 		4CE27B151592264A005E86AD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4C01866E15923A5A008C0642 /* key.ico */,
 				4CE27B4715922670005E86AD /* OVKeyManager.entitlements */,
 				4CE27B161592264A005E86AD /* OVKeyManager-Info.plist */,
 				4CE27B171592264A005E86AD /* InfoPlist.strings */,
@@ -211,8 +245,10 @@
 		4CE27B311592264A005E86AD /* OVKeyManagerTests */ = {
 			isa = PBXGroup;
 			children = (
-				4CE27B371592264A005E86AD /* OVKeyManagerTests.h */,
-				4CE27B381592264A005E86AD /* OVKeyManagerTests.m */,
+				4C01867015923F95008C0642 /* AddKeyTest.h */,
+				4C01867115923F95008C0642 /* AddKeyTest.m */,
+				4CE27B371592264A005E86AD /* OVKeyManagerTestBase.h */,
+				4CE27B381592264A005E86AD /* OVKeyManagerTestBase.m */,
 				4CE27B321592264A005E86AD /* Supporting Files */,
 			);
 			path = OVKeyManagerTests;
@@ -399,6 +435,8 @@
 				4CE27B221592264A005E86AD /* PHCAppDelegate.m in Sources */,
 				4CE27B661592285F005E86AD /* PHCErrors.m in Sources */,
 				4CE27B671592285F005E86AD /* PHCXPCSharedKeyRepository.m in Sources */,
+				4C1D09C0159251440063AB2A /* OVKeyManagerHelperAPI.m in Sources */,
+				4C1D09CD1592562E0063AB2A /* OVLicenseInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +444,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CE27B391592264A005E86AD /* OVKeyManagerTests.m in Sources */,
+				4CE27B391592264A005E86AD /* OVKeyManagerTestBase.m in Sources */,
+				4C01867215923F95008C0642 /* AddKeyTest.m in Sources */,
+				4C0186731592408E008C0642 /* PHCAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,7 +454,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CE27B52159226DF005E86AD /* main.m in Sources */,
+				4C01867C159245C3008C0642 /* main.m in Sources */,
+				4C01867B1592440A008C0642 /* PHCErrors.m in Sources */,
+				4C1D09C1159251440063AB2A /* OVKeyManagerHelperAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +621,10 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OVKeyManagerHelper/OVKeyManagerHelper-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/i686-apple-darwin11/4.2.1\"",
+				);
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
@@ -598,6 +644,10 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OVKeyManagerHelper/OVKeyManagerHelper-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/i686-apple-darwin11/4.2.1\"",
+				);
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,

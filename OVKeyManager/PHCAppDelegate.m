@@ -39,4 +39,17 @@
     return NSLocalizedString(@"Add", @"Add a new key");
 }
 
+- (IBAction)addUpdateKey:(id)sender {
+    
+    id<OVLicenseInfo> licenseInfo = [[OVLicenseInfo alloc] initWithInstitution:self.institution
+                                                                         group:self.group 
+                                                                       product:@"Ovation"
+                                                                    licenseKey:nil];
+    [self.keyRepository addKey:self.sharedKey 
+                    forLicense:licenseInfo
+                         error:^(NSError *err) {
+                             self.keyRepositoryError = err; 
+                         }];
+}
+
 @end

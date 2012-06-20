@@ -22,4 +22,6 @@
 
 @property (nonatomic,strong) id<PHCSharedKeyRepository> keyRepository;
 
+- (IBAction)addUpdateKey:(id)sender;
+
 @end

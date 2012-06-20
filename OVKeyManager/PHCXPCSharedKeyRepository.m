@@ -12,6 +12,7 @@
 #import "PHCXPCSharedKeyRepository.h"
 #import "PHCAppDelegate.h"
 #import "PHCErrors.h"
+#import "OVKeyManagerHelperAPI.h"
 
 
 @interface PHCXPCSharedKeyRepository ()
@@ -84,7 +85,7 @@ const char * SERVICE_NAME = "com.physionconsulting.OVKeyManagerHelper";
         
         if (type == XPC_TYPE_ERROR) {
             NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithCString:xpc_dictionary_get_string(event, _xpc_error_key_description)
-                                                                                               encoding:[NSString defaultCStringEncoding]],
+                                                                                               encoding:NSUTF8StringEncoding],
                                   NSLocalizedDescriptionKey,
                                   nil];
             
@@ -97,7 +98,7 @@ const char * SERVICE_NAME = "com.physionconsulting.OVKeyManagerHelper";
                 
             } else if (event == XPC_ERROR_CONNECTION_INVALID) {
                 NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithCString:xpc_dictionary_get_string(event, _xpc_error_key_description)
-                                                                                                   encoding:[NSString defaultCStringEncoding]],
+                                                                                                   encoding:NSUTF8StringEncoding],
                                       NSLocalizedDescriptionKey,
                                       nil];
                 dispatch_async(dispatch_get_main_queue(), ^() { errCallback([NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN
@@ -132,23 +133,41 @@ const char * SERVICE_NAME = "com.physionconsulting.OVKeyManagerHelper";
     return YES;
 }
 
-- (void)addKey:(NSString*)key forLicense:(id)sharedKey error:(repository_error_callback)err
+- (void)addKey:(NSString*)key forLicense:(id<OVLicenseInfo>)licenseInfo error:(repository_error_callback)err
 {
+    NSParameterAssert(licenseInfo != nil);
 
     if(self.connection == NULL) {
-        [self connectXPC:self.label error:err];
-        return;
+        if(![self connectXPC:self.label error:err]) {
+            return;
+        }
     }
     
-    xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
-    const char* request = "Hi there, helper service.";
-    xpc_dictionary_set_string(message, "request", request);
+    NSAssert(self.connection != NULL, @"No XPC connection");
     
-    //        [self appendLog:[NSString stringWithFormat:@"Sending request: %s", request]];
+    xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
+    xpc_dictionary_set_string(message, COMMAND_KEY, ADD_KEY_COMMAND);
+    xpc_dictionary_set_string(message, INSTITUTION_KEY, [[licenseInfo institution] cStringUsingEncoding:NSUTF8StringEncoding]);
+    xpc_dictionary_set_string(message, GROUP_KEY, [[licenseInfo group] cStringUsingEncoding:NSUTF8StringEncoding]);
+    xpc_dictionary_set_string(message, PRODUCT_KEY, [[licenseInfo product] cStringUsingEncoding:NSUTF8StringEncoding]);
+    xpc_dictionary_set_string(message, SHARED_ENCRYPTION_KEY_KEY, [key cStringUsingEncoding:NSUTF8StringEncoding]);
     
     xpc_connection_send_message_with_reply(self.connection, message, dispatch_get_main_queue(), ^(xpc_object_t event) {
-        //            const char* response = xpc_dictionary_get_string(event, "reply");
-        //            [self appendLog:[NSString stringWithFormat:@"Received response: %s.", response]];
+        
+        BOOL success = xpc_dictionary_get_bool(event, RESULT_STATUS_KEY);
+        if(!success) {
+            
+            NSString * errMsg = [NSString stringWithCString:xpc_dictionary_get_string(event, RESULT_ERR_MSG_KEY)
+                                                    encoding:NSUTF8StringEncoding];
+            
+            NSError *error = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
+                                                 code:KEYCHAIN_ERROR
+                                             userInfo:[NSDictionary dictionaryWithObject:errMsg
+                                                                                  forKey:NSLocalizedDescriptionKey]];
+            dispatch_async(dispatch_get_main_queue(), ^() { err(error); });
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^() { [[NSApplication sharedApplication] terminate:self]; });
+        }
     });
 }
 

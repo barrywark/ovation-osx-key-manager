@@ -16,3 +16,4 @@ const NSInteger CONNECTION_INTERRUPTED = 1;
 const NSInteger INVALID_CONNECTION_ERROR = 3;
 const NSInteger UNKNOWN_XPC_ERROR = 2;
 const NSInteger JOB_BLESS_ERROR = 3;
+const NSInteger KEYCHAIN_ERROR = 4;

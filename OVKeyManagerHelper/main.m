@@ -60,8 +60,14 @@
 
 #include <syslog.h>
 #include <xpc/xpc.h>
-
 #import <Cocoa/Cocoa.h>
+
+#import "PHCErrors.h"
+#import "OVKeyManagerHelperAPI.h"
+
+
+
+static BOOL writeKey(const char * service, const char * keyID, const char * key, NSError * __autoreleasing *err);
 
 static void __XPC_Peer_Event_Handler(xpc_connection_t connection, xpc_object_t event) {
     syslog(LOG_NOTICE, "Received event in helper.");
@@ -83,12 +89,116 @@ static void __XPC_Peer_Event_Handler(xpc_connection_t connection, xpc_object_t e
 	} else {
         xpc_connection_t remote = xpc_dictionary_get_remote_connection(event);
         
-        xpc_object_t reply = xpc_dictionary_create_reply(event);
-        xpc_dictionary_set_string(reply, "reply", "Hi there, host application!");
-        xpc_connection_send_message(remote, reply);
-        xpc_release(reply);
+        NSString *command = [NSString stringWithCString:xpc_dictionary_get_string(event, COMMAND_KEY)
+                                               encoding:NSUTF8StringEncoding];
+        
+        if([command isEqualToString:[NSString stringWithCString:ADD_KEY_COMMAND 
+                                                       encoding:NSUTF8StringEncoding]]) {
+            
+            NSString *institution = [NSString stringWithCString:xpc_dictionary_get_string(event, INSTITUTION_KEY)
+                                                       encoding:NSUTF8StringEncoding];
+            NSString *group = [NSString stringWithCString:xpc_dictionary_get_string(event, GROUP_KEY)
+                                                encoding:NSUTF8StringEncoding];
+            NSString *product = [NSString stringWithCString:xpc_dictionary_get_string(event, PRODUCT_KEY)
+                                                   encoding:NSUTF8StringEncoding];
+            NSString *sharedKey = [NSString stringWithCString:xpc_dictionary_get_string(event, SHARED_ENCRYPTION_KEY_KEY)
+                                                     encoding:NSUTF8StringEncoding];
+            NSString * keyID = [NSString stringWithFormat:@"%@::%@::%@", institution, group, product];
+            
+            NSError *err;
+            if(writeKey("com.physionconsulting.ovation", 
+                        [keyID cStringUsingEncoding:NSUTF8StringEncoding], 
+                        [sharedKey cStringUsingEncoding:NSUTF8StringEncoding],
+                        &err)) {
+                
+                syslog(LOG_INFO, "Sucesfully added key %s to system key chain", [keyID cStringUsingEncoding:NSUTF8StringEncoding]);
+                
+                xpc_object_t reply = xpc_dictionary_create_reply(event);
+                xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, true);
+                xpc_connection_send_message(remote, reply);
+                xpc_release(reply);
+                
+            } else {
+                syslog(LOG_ERR, "Unable to add key %s to system key chain", [keyID cStringUsingEncoding:NSUTF8StringEncoding]);
+                
+                xpc_object_t reply = xpc_dictionary_create_reply(event);
+                xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, false);
+                xpc_dictionary_set_string(reply, RESULT_ERR_MSG_KEY, [[err localizedDescription] cStringUsingEncoding:NSUTF8StringEncoding]);
+                xpc_connection_send_message(remote, reply);
+                xpc_release(reply);                
+            }
+        
+        } else if([command isEqualToString:@"get-keys"]) {
+            
+        } else {
+            syslog(LOG_ERR, "OVKeyManager helper received an uknown command: %s", [command cStringUsingEncoding:NSUTF8StringEncoding]);
+        }
+        
 	}
 }
+
+static BOOL writeKey(const char * service, const char * keyID, const char * key, NSError * __autoreleasing *err)
+{
+	SecKeychainItemRef item = nil;
+	OSStatus returnStatus = SecKeychainAddGenericPassword(NULL,
+														  strlen(service), //service
+														  service, 
+														  strlen(keyID),
+														  keyID, //username 
+														  strlen(key), 
+														  key, //password
+														  &item);
+	
+	if (returnStatus != noErr || !item) {
+		NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
+		
+		if(item != NULL) {
+			CFRelease(item);
+		}
+		
+        if(*err != NULL) {
+            *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
+                                       code:KEYCHAIN_ERROR
+                                   userInfo:[NSDictionary dictionaryWithObject:errMsg
+                                                                        forKey:NSLocalizedDescriptionKey]];
+        }
+		
+		return NO;
+	}
+	
+	// set item kind to "Ovation Database Key"
+	const char *description = "Ovation Database Encryption Key";
+	SecKeychainAttribute kindAttr;
+	kindAttr.tag = kSecDescriptionItemAttr;
+	kindAttr.length = (UInt32)strlen(description);
+	kindAttr.data = (void*)description;
+	
+	SecKeychainAttributeList attrs;
+	attrs.count = 1;
+	attrs.attr = &kindAttr;
+	
+	returnStatus = SecKeychainItemModifyAttributesAndData(item, &attrs, 0, NULL);
+	
+	if(returnStatus != noErr) {
+		NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
+		
+		if(item != NULL) {
+			CFRelease(item);
+		}
+		
+        if(*err != NULL) {
+            *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
+                                       code:KEYCHAIN_ERROR
+                                   userInfo:[NSDictionary dictionaryWithObject:errMsg
+                                                                        forKey:NSLocalizedDescriptionKey]];
+        }
+		
+		return NO;
+	}
+	
+	return YES;
+}
+
 
 static void __XPC_Connection_Handler(xpc_connection_t connection)  {
     syslog(LOG_NOTICE, "Configuring message event handler for OVKeyManager helper.");
