@@ -1,0 +1,451 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4CE27B0F1592264A005E86AD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE27B0E1592264A005E86AD /* Cocoa.framework */; };
+		4CE27B191592264A005E86AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CE27B171592264A005E86AD /* InfoPlist.strings */; };
+		4CE27B1B1592264A005E86AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B1A1592264A005E86AD /* main.m */; };
+		4CE27B1F1592264A005E86AD /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4CE27B1D1592264A005E86AD /* Credits.rtf */; };
+		4CE27B221592264A005E86AD /* PHCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B211592264A005E86AD /* PHCAppDelegate.m */; };
+		4CE27B251592264A005E86AD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CE27B231592264A005E86AD /* MainMenu.xib */; };
+		4CE27B2D1592264A005E86AD /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE27B2C1592264A005E86AD /* SenTestingKit.framework */; };
+		4CE27B2E1592264A005E86AD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE27B0E1592264A005E86AD /* Cocoa.framework */; };
+		4CE27B361592264A005E86AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CE27B341592264A005E86AD /* InfoPlist.strings */; };
+		4CE27B391592264A005E86AD /* OVKeyManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE27B381592264A005E86AD /* OVKeyManagerTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4CE27B2F1592264A005E86AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CE27B011592264A005E86AD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CE27B091592264A005E86AD;
+			remoteInfo = OVKeyManager;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4CE27B0A1592264A005E86AD /* OVKeyManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OVKeyManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CE27B0E1592264A005E86AD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4CE27B111592264A005E86AD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		4CE27B121592264A005E86AD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4CE27B131592264A005E86AD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4CE27B161592264A005E86AD /* OVKeyManager-Info.plist */ = {isa = PBXFileReference; path = "OVKeyManager-Info.plist"; sourceTree = "<group>"; };
+		4CE27B181592264A005E86AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4CE27B1A1592264A005E86AD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4CE27B1C1592264A005E86AD /* OVKeyManager-Prefix.pch */ = {isa = PBXFileReference; path = "OVKeyManager-Prefix.pch"; sourceTree = "<group>"; };
+		4CE27B1E1592264A005E86AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		4CE27B201592264A005E86AD /* PHCAppDelegate.h */ = {isa = PBXFileReference; path = PHCAppDelegate.h; sourceTree = "<group>"; };
+		4CE27B211592264A005E86AD /* PHCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PHCAppDelegate.m; sourceTree = "<group>"; };
+		4CE27B241592264A005E86AD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4CE27B2B1592264A005E86AD /* OVKeyManagerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OVKeyManagerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CE27B2C1592264A005E86AD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		4CE27B331592264A005E86AD /* OVKeyManagerTests-Info.plist */ = {isa = PBXFileReference; path = "OVKeyManagerTests-Info.plist"; sourceTree = "<group>"; };
+		4CE27B351592264A005E86AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4CE27B371592264A005E86AD /* OVKeyManagerTests.h */ = {isa = PBXFileReference; path = OVKeyManagerTests.h; sourceTree = "<group>"; };
+		4CE27B381592264A005E86AD /* OVKeyManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OVKeyManagerTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4CE27B071592264A005E86AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CE27B0F1592264A005E86AD /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CE27B271592264A005E86AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CE27B2D1592264A005E86AD /* SenTestingKit.framework in Frameworks */,
+				4CE27B2E1592264A005E86AD /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4CE27AFF1592264A005E86AD = {
+			isa = PBXGroup;
+			children = (
+				4CE27B141592264A005E86AD /* OVKeyManager */,
+				4CE27B311592264A005E86AD /* OVKeyManagerTests */,
+				4CE27B0D1592264A005E86AD /* Frameworks */,
+				4CE27B0B1592264A005E86AD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4CE27B0B1592264A005E86AD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CE27B0A1592264A005E86AD /* OVKeyManager.app */,
+				4CE27B2B1592264A005E86AD /* OVKeyManagerTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4CE27B0D1592264A005E86AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CE27B0E1592264A005E86AD /* Cocoa.framework */,
+				4CE27B2C1592264A005E86AD /* SenTestingKit.framework */,
+				4CE27B101592264A005E86AD /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4CE27B101592264A005E86AD /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CE27B111592264A005E86AD /* AppKit.framework */,
+				4CE27B121592264A005E86AD /* CoreData.framework */,
+				4CE27B131592264A005E86AD /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		4CE27B141592264A005E86AD /* OVKeyManager */ = {
+			isa = PBXGroup;
+			children = (
+				4CE27B201592264A005E86AD /* PHCAppDelegate.h */,
+				4CE27B211592264A005E86AD /* PHCAppDelegate.m */,
+				4CE27B231592264A005E86AD /* MainMenu.xib */,
+				4CE27B151592264A005E86AD /* Supporting Files */,
+			);
+			path = OVKeyManager;
+			sourceTree = "<group>";
+		};
+		4CE27B151592264A005E86AD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CE27B161592264A005E86AD /* OVKeyManager-Info.plist */,
+				4CE27B171592264A005E86AD /* InfoPlist.strings */,
+				4CE27B1A1592264A005E86AD /* main.m */,
+				4CE27B1C1592264A005E86AD /* OVKeyManager-Prefix.pch */,
+				4CE27B1D1592264A005E86AD /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4CE27B311592264A005E86AD /* OVKeyManagerTests */ = {
+			isa = PBXGroup;
+			children = (
+				4CE27B371592264A005E86AD /* OVKeyManagerTests.h */,
+				4CE27B381592264A005E86AD /* OVKeyManagerTests.m */,
+				4CE27B321592264A005E86AD /* Supporting Files */,
+			);
+			path = OVKeyManagerTests;
+			sourceTree = "<group>";
+		};
+		4CE27B321592264A005E86AD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CE27B331592264A005E86AD /* OVKeyManagerTests-Info.plist */,
+				4CE27B341592264A005E86AD /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4CE27B091592264A005E86AD /* OVKeyManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CE27B3C1592264A005E86AD /* Build configuration list for PBXNativeTarget "OVKeyManager" */;
+			buildPhases = (
+				4CE27B061592264A005E86AD /* Sources */,
+				4CE27B071592264A005E86AD /* Frameworks */,
+				4CE27B081592264A005E86AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OVKeyManager;
+			productName = OVKeyManager;
+			productReference = 4CE27B0A1592264A005E86AD /* OVKeyManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4CE27B2A1592264A005E86AD /* OVKeyManagerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CE27B3F1592264A005E86AD /* Build configuration list for PBXNativeTarget "OVKeyManagerTests" */;
+			buildPhases = (
+				4CE27B261592264A005E86AD /* Sources */,
+				4CE27B271592264A005E86AD /* Frameworks */,
+				4CE27B281592264A005E86AD /* Resources */,
+				4CE27B291592264A005E86AD /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4CE27B301592264A005E86AD /* PBXTargetDependency */,
+			);
+			name = OVKeyManagerTests;
+			productName = OVKeyManagerTests;
+			productReference = 4CE27B2B1592264A005E86AD /* OVKeyManagerTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4CE27B011592264A005E86AD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = PHC;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 4CE27B041592264A005E86AD /* Build configuration list for PBXProject "OVKeyManager" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4CE27AFF1592264A005E86AD;
+			productRefGroup = 4CE27B0B1592264A005E86AD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4CE27B091592264A005E86AD /* OVKeyManager */,
+				4CE27B2A1592264A005E86AD /* OVKeyManagerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4CE27B081592264A005E86AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CE27B191592264A005E86AD /* InfoPlist.strings in Resources */,
+				4CE27B1F1592264A005E86AD /* Credits.rtf in Resources */,
+				4CE27B251592264A005E86AD /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CE27B281592264A005E86AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CE27B361592264A005E86AD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4CE27B291592264A005E86AD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4CE27B061592264A005E86AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CE27B1B1592264A005E86AD /* main.m in Sources */,
+				4CE27B221592264A005E86AD /* PHCAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CE27B261592264A005E86AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CE27B391592264A005E86AD /* OVKeyManagerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4CE27B301592264A005E86AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CE27B091592264A005E86AD /* OVKeyManager */;
+			targetProxy = 4CE27B2F1592264A005E86AD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4CE27B171592264A005E86AD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CE27B181592264A005E86AD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4CE27B1D1592264A005E86AD /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CE27B1E1592264A005E86AD /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		4CE27B231592264A005E86AD /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CE27B241592264A005E86AD /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4CE27B341592264A005E86AD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CE27B351592264A005E86AD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4CE27B3A1592264A005E86AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4CE27B3B1592264A005E86AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4CE27B3D1592264A005E86AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OVKeyManager/OVKeyManager-Prefix.pch";
+				INFOPLIST_FILE = "OVKeyManager/OVKeyManager-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4CE27B3E1592264A005E86AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OVKeyManager/OVKeyManager-Prefix.pch";
+				INFOPLIST_FILE = "OVKeyManager/OVKeyManager-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		4CE27B401592264A005E86AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OVKeyManager.app/Contents/MacOS/OVKeyManager";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OVKeyManager/OVKeyManager-Prefix.pch";
+				INFOPLIST_FILE = "OVKeyManagerTests/OVKeyManagerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		4CE27B411592264A005E86AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OVKeyManager.app/Contents/MacOS/OVKeyManager";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OVKeyManager/OVKeyManager-Prefix.pch";
+				INFOPLIST_FILE = "OVKeyManagerTests/OVKeyManagerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4CE27B041592264A005E86AD /* Build configuration list for PBXProject "OVKeyManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CE27B3A1592264A005E86AD /* Debug */,
+				4CE27B3B1592264A005E86AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CE27B3C1592264A005E86AD /* Build configuration list for PBXNativeTarget "OVKeyManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CE27B3D1592264A005E86AD /* Debug */,
+				4CE27B3E1592264A005E86AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		4CE27B3F1592264A005E86AD /* Build configuration list for PBXNativeTarget "OVKeyManagerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CE27B401592264A005E86AD /* Debug */,
+				4CE27B411592264A005E86AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4CE27B011592264A005E86AD /* Project object */;
+}
