@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.physionconsulting.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.physionconsulting.OVKeyManager</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -33,8 +33,9 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>SMPrivilegedExecutables</key>
-	<dict/>
-	<key>com.physionconsulting.OVKeyManagerHelper</key>
-	<string>identifier com.physionconsulting.OVKeyManagerHelper and certificate leaf[subject.CN] = &quot;Mac Developer: Barry Wark (85KFBWPN4D)&quot;</string>
+	<dict>
+		<key>com.physionconsulting.OVKeyManagerHelper</key>
+		<string>identifier com.physionconsulting.OVKeyManagerHelper and certificate leaf[subject.CN] = &quot;Mac Developer: Barry Wark (85KFBWPN4D)&quot;</string>
+	</dict>
 </dict>
 </plist>

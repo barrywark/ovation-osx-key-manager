@@ -24,7 +24,7 @@
 
 @end
 
-const char * SERVICE_NAME = "com.physionconsulting.Ovation-Key-Manager-Helper";
+const char * SERVICE_NAME = "com.physionconsulting.OVKeyManagerHelper";
 
 @implementation PHCXPCSharedKeyRepository 
 
@@ -53,6 +53,10 @@ const char * SERVICE_NAME = "com.physionconsulting.Ovation-Key-Manager-Helper";
 
 - (BOOL)connectXPC:(NSString*)bundleID error:(repository_error_callback)errCallback {
     
+    if(self.connection != NULL) {
+        return YES;
+    }
+    
     NSError *err;
     
     if (![self blessHelperWithLabel:bundleID error:&err]) {
@@ -79,28 +83,34 @@ const char * SERVICE_NAME = "com.physionconsulting.Ovation-Key-Manager-Helper";
         xpc_type_t type = xpc_get_type(event);
         
         if (type == XPC_TYPE_ERROR) {
+            NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithCString:xpc_dictionary_get_string(event, _xpc_error_key_description)
+                                                                                               encoding:[NSString defaultCStringEncoding]],
+                                  NSLocalizedDescriptionKey,
+                                  nil];
             
             if (event == XPC_ERROR_CONNECTION_INTERRUPTED) {
+                
                         dispatch_async(dispatch_get_main_queue(), ^() { errCallback([NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN
                                                 code:CONNECTION_INTERRUPTED
-                                            userInfo:[NSDictionary dictionaryWithObject:@"XPC Connection Interrupted"
-                                                                                 forKey:NSLocalizedDescriptionKey]]);
+                                            userInfo:info]);
                         });
                 
             } else if (event == XPC_ERROR_CONNECTION_INVALID) {
-                        dispatch_async(dispatch_get_main_queue(), ^() { errCallback([NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN
-                                                                                                        code:INVALID_CONNECTION_ERROR
-                                                                                                    userInfo:[NSDictionary dictionaryWithObject:@"XPC Connection Invalid"
-                                                                                                                                         forKey:NSLocalizedDescriptionKey]]);
-                        });
+                NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithCString:xpc_dictionary_get_string(event, _xpc_error_key_description)
+                                                                                                   encoding:[NSString defaultCStringEncoding]],
+                                      NSLocalizedDescriptionKey,
+                                      nil];
+                dispatch_async(dispatch_get_main_queue(), ^() { errCallback([NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN
+                                                                                                code:INVALID_CONNECTION_ERROR
+                                                                                            userInfo:info]);
+                });
                 xpc_release(self.connection);
                 self.connection = NULL;
                 
             } else {
                 dispatch_async(dispatch_get_main_queue(), ^() { errCallback([NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN
                                                                                                 code:CONNECTION_ERROR
-                                                                                            userInfo:[NSDictionary dictionaryWithObject:@"XPC Connection Error"
-                                                                                                                                 forKey:NSLocalizedDescriptionKey]]);
+                                                                                            userInfo:info]);
                 });
                 xpc_release(self.connection);
                 self.connection = NULL;
@@ -109,7 +119,7 @@ const char * SERVICE_NAME = "com.physionconsulting.Ovation-Key-Manager-Helper";
         } else {
             dispatch_async(dispatch_get_main_queue(), ^() { errCallback([NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN
                                                                                             code:UNKNOWN_XPC_ERROR
-                                                                                        userInfo:[NSDictionary dictionaryWithObject:@"Unknown XPC Error"
+                                                                                        userInfo:[NSDictionary dictionaryWithObject:@"Unknown XPC Event"
                                                                                                                              forKey:NSLocalizedDescriptionKey]]);
             });
             xpc_release(self.connection);
