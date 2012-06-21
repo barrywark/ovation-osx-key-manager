@@ -25,14 +25,28 @@ const char * ADD_KEY_COMMAND = "ovation-add-key-command";
 BOOL writeKey(const char * service, const char * keyID, const char * key, NSError * __autoreleasing *err)
 {
 	SecKeychainItemRef item = nil;
-	OSStatus returnStatus = SecKeychainAddGenericPassword(NULL,
-														  strlen(service), //service
-														  service, 
-														  strlen(keyID),
-														  keyID, //username 
-														  strlen(key), 
-														  key, //password
-														  &item);
+    UInt32 passwordLength;
+    void *passwordData;
+    
+	OSStatus returnStatus = SecKeychainFindGenericPassword(NULL, 
+                                                           strlen(service),
+                                                           service, 
+                                                           strlen(keyID), 
+                                                           keyID, 
+                                                           &passwordLength, 
+                                                           &passwordData, 
+                                                           &item);
+    
+    if(returnStatus == errSecItemNotFound) {
+        returnStatus = SecKeychainAddGenericPassword(NULL,
+                                                     strlen(service), //service
+                                                     service, 
+                                                     strlen(keyID),
+                                                     keyID, //username 
+                                                     strlen(key), 
+                                                     key, //password
+                                                     &item);
+    }
 	
 	if (returnStatus != noErr || !item) {
 		NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));

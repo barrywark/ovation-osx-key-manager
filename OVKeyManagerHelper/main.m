@@ -66,7 +66,6 @@
 #import "OVKeyManagerHelperAPI.h"
 
 static void __XPC_Peer_Event_Handler(xpc_connection_t connection, xpc_object_t event) {
-    syslog(LOG_NOTICE, "Received event in helper.");
     
 	xpc_type_t type = xpc_get_type(event);
     
