@@ -100,7 +100,10 @@ void handle_add_key_command(xpc_object_t event, xpc_connection_t remote) {
                 &err)) {
         
         
-        syslog(LOG_NOTICE, "Sucesfully added key to system key chain");        
+        syslog(LOG_NOTICE, "Sucesfully added key to system key chain");  
+        
+        reply_success(event, remote);
+        
     } else {
         syslog(LOG_ERR, "Unable to add key to system key chain");
         

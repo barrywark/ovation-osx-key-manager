@@ -31,7 +31,7 @@ const char * RESULT_ERR_MSG_KEY = "ovation-result-err-msg-key";
 const char * ADD_KEY_COMMAND = "ovation-add-key-command";
 
 
-void handle_sec_error(OSStatus returnStatus, NSError **error)
+BOOL handle_sec_error(OSStatus returnStatus, NSError **error)
 {
     NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
     if(error != NULL) {
@@ -40,6 +40,8 @@ void handle_sec_error(OSStatus returnStatus, NSError **error)
                                  userInfo:[NSDictionary dictionaryWithObject:errMsg
                                                                       forKey:NSLocalizedDescriptionKey]];
     }
+    
+    return NO;
 }
 
 BOOL createAccess(NSString *accessLabel, NSArray *appPaths, SecAccessRef *access, NSError **error)
@@ -82,8 +84,7 @@ BOOL createAccess(NSString *accessLabel, NSArray *appPaths, SecAccessRef *access
                           access);
     
     if(err != errSecSuccess) {
-        handle_sec_error(err, error);
-        return NO;
+        return handle_sec_error(err, error);
     }
     
     return YES;
@@ -99,7 +100,6 @@ BOOL writeKey(const char * service,
     UInt32 passwordLength;
     void *passwordData;
     
-    BOOL existingItem = YES;
 	OSStatus returnStatus = SecKeychainFindGenericPassword(NULL, 
                                                            strlen(service),
                                                            service, 
@@ -109,10 +109,9 @@ BOOL writeKey(const char * service,
                                                            &passwordData, 
                                                            &item);
     
-    if(returnStatus == errSecItemNotFound) {
-        existingItem = NO;
+    if(returnStatus == errSecItemNotFound) { //Create a new key entry
         
-        const char *description = "Ovation Database Encryption Key";
+        const char *description = [NSLocalizedString(@"Ovation Database Encryption Key", @"Ovation Database Encryption Key") cStringUsingEncoding:NSUTF8StringEncoding];
         
         //Set up the attribute vector (each attribute consists
         // of {tag, length, pointer}):
@@ -143,40 +142,33 @@ BOOL writeKey(const char * service,
                                          NULL, //default keychain
                                          access, 
                                          &item);
-    }
-	
-	if (returnStatus != errSecSuccess || !item) {
-		if(item != NULL) {
-			CFRelease(item);
-		}
-		
-        handle_sec_error(returnStatus, err);
-		
-		return NO;
-	}
-    
-    if(existingItem) { //Update password
-       
-        returnStatus = SecKeychainItemModifyAttributesAndData (
-                                                         item,         // the item reference
-                                                         NULL,            // no change to attributes
-                                                         strlen(key),  // length of password
-                                                         key         // pointer to password data
-                                                         );
         
         
-    }
-    
-    
-    if(returnStatus != errSecSuccess) {
-        if(item != NULL) {
-            CFRelease(item);
+        if (returnStatus != errSecSuccess || !item) {
+            if(item != NULL) {
+                CFRelease(item);
+            }
+            
+            return handle_sec_error(returnStatus, err);
         }
         
-        handle_sec_error(returnStatus, err);
+    } else { //Update password
         
-        return NO;
+        returnStatus = SecKeychainItemModifyAttributesAndData (item,         // the item reference
+                                                               NULL,            // no change to attributes
+                                                               strlen(key),  // length of password
+                                                               key         // pointer to password data
+                                                               );
+        
+        if(returnStatus != errSecSuccess) {
+            if(item != NULL) {
+                CFRelease(item);
+            }
+            
+            return handle_sec_error(returnStatus, err);
+        }
+        
     }
-	
+    
 	return YES;
 }
