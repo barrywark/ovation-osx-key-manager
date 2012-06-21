@@ -56,10 +56,12 @@
     [self.systemKeyRepository addKey:self.sharedKey 
                           forLicense:licenseInfo
                              success:^() {
+                                 self.statusText = NSLocalizedString(@"System key updated succesfully", @"Shared encryption key added/updated in system keychain.");
+                                 NSLog(@"system key added.");
                                  [self.loginKeyRepository addKey:self.sharedKey
                                                       forLicense:licenseInfo
                                                          success:^() {
-                                                             self.statusText = NSLocalizedString(@"Key updated succesfully", @"Shared Encryption Key Added/Updated Succesfully");
+                                                             self.statusText = NSLocalizedString(@"Key updated succesfully", @"Shared encryption key Added/Updated Succesfully");
                                                          }
                                                            error:^(NSError *err) {
                                                                self.keyRepositoryError = err; 

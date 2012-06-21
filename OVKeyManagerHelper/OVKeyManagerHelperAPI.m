@@ -6,8 +6,11 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#include <syslog.h>
+
 #import "OVKeyManagerHelperAPI.h"
 #import "PHCErrors.h"
+
 
 const char * COMMAND_KEY = "ovation-command-key";
 const char * INSTITUTION_KEY = "ovation-institution-key";
@@ -28,6 +31,7 @@ BOOL writeKey(const char * service, const char * keyID, const char * key, NSErro
     UInt32 passwordLength;
     void *passwordData;
     
+    BOOL existingItem = YES;
 	OSStatus returnStatus = SecKeychainFindGenericPassword(NULL, 
                                                            strlen(service),
                                                            service, 
@@ -38,6 +42,7 @@ BOOL writeKey(const char * service, const char * keyID, const char * key, NSErro
                                                            &item);
     
     if(returnStatus == errSecItemNotFound) {
+        existingItem = NO;
         returnStatus = SecKeychainAddGenericPassword(NULL,
                                                      strlen(service), //service
                                                      service, 
@@ -48,7 +53,7 @@ BOOL writeKey(const char * service, const char * keyID, const char * key, NSErro
                                                      &item);
     }
 	
-	if (returnStatus != noErr || !item) {
+	if (returnStatus != errSecSuccess || !item) {
 		NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
 		
 		if(item != NULL) {
@@ -64,36 +69,50 @@ BOOL writeKey(const char * service, const char * keyID, const char * key, NSErro
 		
 		return NO;
 	}
-	
-	// set item kind to "Ovation Database Key"
-	const char *description = "Ovation Database Encryption Key";
-	SecKeychainAttribute kindAttr;
-	kindAttr.tag = kSecDescriptionItemAttr;
-	kindAttr.length = (UInt32)strlen(description);
-	kindAttr.data = (void*)description;
-	
-	SecKeychainAttributeList attrs;
-	attrs.count = 1;
-	attrs.attr = &kindAttr;
-	
-	returnStatus = SecKeychainItemModifyAttributesAndData(item, &attrs, 0, NULL);
-	
-	if(returnStatus != noErr) {
-		NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
-		
-		if(item != NULL) {
-			CFRelease(item);
-		}
-		
+    
+    if(existingItem) { //Update password
+       
+        returnStatus = SecKeychainItemModifyAttributesAndData (
+                                                         item,         // the item reference
+                                                         NULL,            // no change to attributes
+                                                         strlen(key),  // length of password
+                                                         key         // pointer to password data
+                                                         );
+        
+        
+    } else {
+        
+        // set item kind to "Ovation Database Key"
+        const char *description = "Ovation Database Encryption Key";
+        SecKeychainAttribute kindAttr;
+        kindAttr.tag = kSecDescriptionItemAttr;
+        kindAttr.length = (UInt32)strlen(description);
+        kindAttr.data = (void*)description;
+        
+        SecKeychainAttributeList attrs;
+        attrs.count = 1;
+        attrs.attr = &kindAttr;
+        
+        returnStatus = SecKeychainItemModifyAttributesAndData(item, &attrs, 0, NULL);
+    }
+    
+    
+    if(returnStatus != errSecSuccess) {
+        NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
+        
+        if(item != NULL) {
+            CFRelease(item);
+        }
+        
         if(*err != NULL) {
             *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
                                        code:KEYCHAIN_ERROR
                                    userInfo:[NSDictionary dictionaryWithObject:errMsg
                                                                         forKey:NSLocalizedDescriptionKey]];
         }
-		
-		return NO;
-	}
+        
+        return NO;
+    }
 	
 	return YES;
 }
