@@ -23,7 +23,12 @@
     if(writeKey("com.physionconsulting.ovation", 
                 [licenseInfo.keyID cStringUsingEncoding:NSUTF8StringEncoding], 
                 [key cStringUsingEncoding:NSUTF8StringEncoding],
-                &error)) {
+                &error) &&
+       addACL(@"Ovation Shared Encryption Key", "com.physionconsulting.ovation",
+              [licenseInfo.keyID cStringUsingEncoding:NSUTF8StringEncoding],
+              "/opt/object/mac86_64/bin/ooqs",
+              &error)
+       ) {
         dispatch_async(dispatch_get_main_queue(), success);
     } else {
         dispatch_async(dispatch_get_main_queue(), ^() { err(error); });

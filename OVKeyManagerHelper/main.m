@@ -65,6 +65,65 @@
 #import "PHCErrors.h"
 #import "OVKeyManagerHelperAPI.h"
 
+void reply_failure(xpc_object_t event, NSError *err, xpc_connection_t remote) {
+    xpc_object_t reply = xpc_dictionary_create_reply(event);
+    xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, false);
+    xpc_dictionary_set_string(reply, RESULT_ERR_MSG_KEY, [[err localizedDescription] cStringUsingEncoding:NSUTF8StringEncoding]);
+    xpc_connection_send_message(remote, reply);
+    xpc_release(reply);
+}
+
+void reply_success(xpc_object_t event, xpc_connection_t remote) {
+    xpc_object_t reply = xpc_dictionary_create_reply(event);
+    xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, true);
+    xpc_connection_send_message(remote, reply);
+    xpc_release(reply);
+}
+
+void handle_add_key_command(xpc_object_t event, xpc_connection_t remote) {
+    
+    NSString *sharedKey = [NSString stringWithCString:xpc_dictionary_get_string(event, SHARED_ENCRYPTION_KEY_KEY)
+                                             encoding:NSUTF8StringEncoding];
+    
+    NSString * keyID = [NSString stringWithCString:xpc_dictionary_get_string(event, KEY_ID_KEY)
+                                          encoding:NSUTF8StringEncoding];
+    
+    NSError *err;
+    
+    const char * service = "com.physionconsulting.ovation";
+    const char * ooqsPath = "/opt/object/mac86_64/bin/ooqs";
+    
+    if(writeKey(service, 
+                [keyID cStringUsingEncoding:NSUTF8StringEncoding], 
+                [sharedKey cStringUsingEncoding:NSUTF8StringEncoding],
+                &err)) {
+        
+        syslog(LOG_NOTICE, "Sucesfully added key to system key chain");
+        
+        if(addACL([NSString stringWithFormat:@"Ovation shared encryption key for %@", keyID], 
+                  service,
+                  [keyID cStringUsingEncoding:NSUTF8StringEncoding], 
+                  ooqsPath,
+                  &err)) {
+            
+            syslog(LOG_NOTICE, "Sucesfully updated ACL for key");
+            
+            reply_success(event, remote);
+        } else {
+            syslog(LOG_ERR, "Unable to add ooqs ACL for system keychain item %s", [keyID cStringUsingEncoding:NSUTF8StringEncoding]);
+            
+            reply_failure(event, err, remote); 
+        }
+        
+        
+        
+    } else {
+        syslog(LOG_ERR, "Unable to add key to system key chain");
+        
+        reply_failure(event, err, remote);
+    }
+}
+
 static void __XPC_Peer_Event_Handler(xpc_connection_t connection, xpc_object_t event) {
     
 	xpc_type_t type = xpc_get_type(event);
@@ -89,53 +148,8 @@ static void __XPC_Peer_Event_Handler(xpc_connection_t connection, xpc_object_t e
         
         if([command isEqualToString:[NSString stringWithCString:ADD_KEY_COMMAND 
                                                        encoding:NSUTF8StringEncoding]]) {
-            NSString *sharedKey = [NSString stringWithCString:xpc_dictionary_get_string(event, SHARED_ENCRYPTION_KEY_KEY)
-                                                     encoding:NSUTF8StringEncoding];
             
-            NSString * keyID = [NSString stringWithCString:xpc_dictionary_get_string(event, KEY_ID_KEY)
-                                                  encoding:NSUTF8StringEncoding];
-            
-            NSError *err;
-            const char * service = "com.physionconsulting.ovation";
-            const char * ooqsPath = "/opt/object/mac86_64/bin/ooqs";
-            if(writeKey(service, 
-                        [keyID cStringUsingEncoding:NSUTF8StringEncoding], 
-                        [sharedKey cStringUsingEncoding:NSUTF8StringEncoding],
-                        &err)) {
-                
-                syslog(LOG_NOTICE, "Sucesfully added key to system key chain");
-                
-                if(addACL([NSString stringWithFormat:NSLocalizedString(@"Ovation shared encryption key for %%@", @"Shared encryption key description template"), keyID], 
-                          service,
-                           [keyID cStringUsingEncoding:NSUTF8StringEncoding], ooqsPath, &err)) {
-                    
-                    syslog(LOG_NOTICE, "Sucesfully updated ACL for key");
-                    
-                    xpc_object_t reply = xpc_dictionary_create_reply(event);
-                    xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, true);
-                    xpc_connection_send_message(remote, reply);
-                    xpc_release(reply);
-                } else {
-                    syslog(LOG_ERR, "Unable to add ooqs ACL for system keychain item %s", [keyID cStringUsingEncoding:NSUTF8StringEncoding]);
-                    
-                    xpc_object_t reply = xpc_dictionary_create_reply(event);
-                    xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, false);
-                    xpc_dictionary_set_string(reply, RESULT_ERR_MSG_KEY, [[err localizedDescription] cStringUsingEncoding:NSUTF8StringEncoding]);
-                    xpc_connection_send_message(remote, reply);
-                    xpc_release(reply); 
-                }
-                
-                
-                
-            } else {
-                syslog(LOG_ERR, "Unable to add key to system key chain");
-                
-                xpc_object_t reply = xpc_dictionary_create_reply(event);
-                xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, false);
-                xpc_dictionary_set_string(reply, RESULT_ERR_MSG_KEY, [[err localizedDescription] cStringUsingEncoding:NSUTF8StringEncoding]);
-                xpc_connection_send_message(remote, reply);
-                xpc_release(reply);                
-            }
+            handle_add_key_command(event, remote);
         
         } else if([command isEqualToString:@"get-keys"]) {
             
