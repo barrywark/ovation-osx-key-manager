@@ -7,6 +7,11 @@
 //
 
 #include <syslog.h>
+#include <Security/SecKeychain.h>
+#include <Security/SecKeychainItem.h>
+#include <Security/SecAccess.h>
+#include <Security/SecTrustedApplication.h>
+#include <Security/SecACL.h>
 
 #import "OVKeyManagerHelperAPI.h"
 #import "PHCErrors.h"
@@ -25,88 +30,70 @@ const char * RESULT_ERR_MSG_KEY = "ovation-result-err-msg-key";
 
 const char * ADD_KEY_COMMAND = "ovation-add-key-command";
 
-BOOL handle_sec_err(SecAccessRef accessRef, SecTrustedApplicationRef trustedApplication, SecKeychainItemRef item, SecACLRef aclRef, NSError **err, OSStatus returnStatus)
+
+void handle_sec_error(OSStatus returnStatus, NSError **error)
 {
-    if(accessRef != NULL) {
-        CFRelease(accessRef);
+    NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
+    if(error != NULL) {
+        *error = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
+                                     code:KEYCHAIN_ERROR
+                                 userInfo:[NSDictionary dictionaryWithObject:errMsg
+                                                                      forKey:NSLocalizedDescriptionKey]];
     }
-    if(trustedApplication != NULL) {
-        CFRelease(trustedApplication);
-    }
-    if(item != NULL) {
-        CFRelease(item);
-    }
-    if(aclRef != NULL) {
-        CFRelease(aclRef);
-    }
-    
-    if(err != NULL) {
-        NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
-        
-        *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
-                                   code:KEYCHAIN_ERROR
-                               userInfo:[NSDictionary dictionaryWithObject:errMsg
-                                                                    forKey:NSLocalizedDescriptionKey]];
-    }
-    
-    return NO;
 }
 
-BOOL addACL(NSString * itemDescription, const char * service, const char * keyID, const char * applicationPath, NSError * __autoreleasing *err)
+BOOL createAccess(NSString *accessLabel, NSArray *appPaths, SecAccessRef *access, NSError **error)
 {
-    assert(itemDescription != nil);
+    OSStatus err;
     
-    SecTrustedApplicationRef trustedApplication = NULL;
-    SecKeychainItemRef item = NULL;
-    SecAccessRef accessRef = NULL;
-    SecACLRef aclRef = NULL;
+    //Make an exception list of trusted applications; that is,
+    // applications that are allowed to access the item without
+    // requiring user confirmation:
+    SecTrustedApplicationRef myself;
     
-    OSStatus returnStatus = SecTrustedApplicationCreateFromPath(applicationPath, 
-                                                                &trustedApplication);
-    if(returnStatus != errSecSuccess) {
-        return handle_sec_err(accessRef, trustedApplication, item, aclRef, err, returnStatus);   
+    //Create trusted application references; see SecTrustedApplications.h:
+    err = SecTrustedApplicationCreateFromPath(NULL, &myself);
+    NSMutableArray *trustedApplications = [NSMutableArray arrayWithObject:(__bridge_transfer id)myself];
+    
+    BOOL __block failure = NO;
+    [appPaths enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SecTrustedApplicationRef appRef;
+        OSStatus returnStatus;
+        returnStatus = SecTrustedApplicationCreateFromPath([(NSString*)obj cStringUsingEncoding:NSUTF8StringEncoding],
+                                                           &appRef);
+        
+        if(returnStatus != errSecSuccess) {
+            handle_sec_error(returnStatus, error);
+            
+            *stop = YES;
+            failure = YES;
+        } else {
+            [trustedApplications addObject:(__bridge_transfer id)appRef];
+        }
+    }];
+    
+    if(failure) {
+        return NO;
     }
     
-
-    returnStatus = SecAccessCreate((__bridge CFStringRef)itemDescription, NULL, &accessRef);
+    //Create an access object:
+    err = SecAccessCreate((__bridge CFStringRef)accessLabel,
+                          (__bridge CFArrayRef)trustedApplications, 
+                          access);
     
-    if(returnStatus != errSecSuccess) {
-        return handle_sec_err(accessRef, trustedApplication, item, aclRef, err, returnStatus);   
+    if(err != errSecSuccess) {
+        handle_sec_error(err, error);
+        return NO;
     }
-    
-    
-    SecTrustedApplicationRef trustedApplications[] = { trustedApplication };
-    CFArrayRef trustedList = CFArrayCreate(NULL, (void*)trustedApplications, 1, NULL);
-    returnStatus = SecACLCreateWithSimpleContents(accessRef , trustedList, (__bridge CFStringRef)itemDescription, 0, &aclRef);
-    CFRelease(trustedList);
-    
-    if(returnStatus != errSecSuccess) {
-        return handle_sec_err(accessRef, trustedApplication, item, aclRef, err, returnStatus);   
-    }
-    
-    
-    
-    UInt32 passwordLength;
-    void *passwordData;
-    returnStatus = SecKeychainFindGenericPassword(NULL, 
-                                                  strlen(service),
-                                                  service, 
-                                                  strlen(keyID), 
-                                                  keyID, 
-                                                  &passwordLength, 
-                                                  &passwordData, 
-                                                  &item);
-    
-    if(returnStatus == errSecItemNotFound) {
-        return handle_sec_err(accessRef, trustedApplication, item, aclRef, err, returnStatus);   
-    }
-    
     
     return YES;
-
 }
 
-BOOL writeKey(const char * service, const char * keyID, const char * key, NSError * __autoreleasing *err)
+BOOL writeKey(const char * service, 
+              const char * keyID, 
+              const char * key, 
+              NSArray *aclAppPaths,
+              NSError * __autoreleasing *err)
 {
 	SecKeychainItemRef item = NULL;
     UInt32 passwordLength;
@@ -124,29 +111,46 @@ BOOL writeKey(const char * service, const char * keyID, const char * key, NSErro
     
     if(returnStatus == errSecItemNotFound) {
         existingItem = NO;
-        returnStatus = SecKeychainAddGenericPassword(NULL,
-                                                     strlen(service), //service
-                                                     service, 
-                                                     strlen(keyID),
-                                                     keyID, //username 
-                                                     strlen(key), 
-                                                     key, //password
-                                                     &item);
+        
+        const char *description = "Ovation Database Encryption Key";
+        
+        //Set up the attribute vector (each attribute consists
+        // of {tag, length, pointer}):
+        SecKeychainAttribute attrs[] = {
+            { kSecServiceItemAttr, strlen(service), (char*)service },
+            { kSecAccountItemAttr, strlen(keyID), (char *)keyID },
+            { kSecDescriptionItemAttr, strlen(description), (char*)description }, 
+        };
+        SecKeychainAttributeList attributes = { sizeof(attrs) / sizeof(attrs[0]),
+            attrs };
+        
+        SecAccessRef access;
+        if(!createAccess(@"Access label", 
+                         aclAppPaths, 
+                         &access, 
+                         err)) {
+            if(access != NULL) {
+                CFRelease(access);
+            }
+            
+            return NO;
+        }
+        
+        returnStatus = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, 
+                                         &attributes, 
+                                         strlen(key), 
+                                         key, 
+                                         NULL, //default keychain
+                                         access, 
+                                         &item);
     }
 	
 	if (returnStatus != errSecSuccess || !item) {
-		NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
-		
 		if(item != NULL) {
 			CFRelease(item);
 		}
 		
-        if(err != NULL) {
-            *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
-                                       code:KEYCHAIN_ERROR
-                                   userInfo:[NSDictionary dictionaryWithObject:errMsg
-                                                                        forKey:NSLocalizedDescriptionKey]];
-        }
+        handle_sec_error(returnStatus, err);
 		
 		return NO;
 	}
@@ -161,36 +165,15 @@ BOOL writeKey(const char * service, const char * keyID, const char * key, NSErro
                                                          );
         
         
-    } else {
-        
-        // set item kind to "Ovation Database Key"
-        const char *description = "Ovation Database Encryption Key";
-        SecKeychainAttribute kindAttr;
-        kindAttr.tag = kSecDescriptionItemAttr;
-        kindAttr.length = (UInt32)strlen(description);
-        kindAttr.data = (void*)description;
-        
-        SecKeychainAttributeList attrs;
-        attrs.count = 1;
-        attrs.attr = &kindAttr;
-        
-        returnStatus = SecKeychainItemModifyAttributesAndData(item, &attrs, 0, NULL);
     }
     
     
     if(returnStatus != errSecSuccess) {
-        NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
-        
         if(item != NULL) {
             CFRelease(item);
         }
         
-        if(err != NULL) {
-            *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
-                                       code:KEYCHAIN_ERROR
-                                   userInfo:[NSDictionary dictionaryWithObject:errMsg
-                                                                        forKey:NSLocalizedDescriptionKey]];
-        }
+        handle_sec_error(returnStatus, err);
         
         return NO;
     }

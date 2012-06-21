@@ -91,32 +91,16 @@ void handle_add_key_command(xpc_object_t event, xpc_connection_t remote) {
     NSError *err;
     
     const char * service = "com.physionconsulting.ovation";
-    const char * ooqsPath = "/opt/object/mac86_64/bin/ooqs";
+    NSString * ooqsPath = @"/opt/object/mac86_64/bin/ooqs";
     
     if(writeKey(service, 
                 [keyID cStringUsingEncoding:NSUTF8StringEncoding], 
                 [sharedKey cStringUsingEncoding:NSUTF8StringEncoding],
+                [NSArray arrayWithObject:ooqsPath],
                 &err)) {
         
-        syslog(LOG_NOTICE, "Sucesfully added key to system key chain");
         
-        if(addACL([NSString stringWithFormat:@"Ovation shared encryption key for %@", keyID], 
-                  service,
-                  [keyID cStringUsingEncoding:NSUTF8StringEncoding], 
-                  ooqsPath,
-                  &err)) {
-            
-            syslog(LOG_NOTICE, "Sucesfully updated ACL for key");
-            
-            reply_success(event, remote);
-        } else {
-            syslog(LOG_ERR, "Unable to add ooqs ACL for system keychain item %s", [keyID cStringUsingEncoding:NSUTF8StringEncoding]);
-            
-            reply_failure(event, err, remote); 
-        }
-        
-        
-        
+        syslog(LOG_NOTICE, "Sucesfully added key to system key chain");        
     } else {
         syslog(LOG_ERR, "Unable to add key to system key chain");
         
