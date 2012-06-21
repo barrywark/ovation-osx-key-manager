@@ -52,13 +52,13 @@
     self.statusText = nil;
     self.keyRepositoryError = nil;
     
-    //Add the key to the system, then the login key chain
-    [self.systemKeyRepository addKey:self.sharedKey 
-                          forLicense:licenseInfo
-                             success:^() {
-                                 self.statusText = NSLocalizedString(@"System key updated succesfully", @"Shared encryption key added/updated in system keychain.");
-                                 NSLog(@"system key added.");
-                                 [self.loginKeyRepository addKey:self.sharedKey
+    //Add the key to the login, then the system keychain
+    [self.loginKeyRepository addKey:self.sharedKey 
+                         forLicense:licenseInfo
+                            success:^() {
+                                self.statusText = NSLocalizedString(@"User key updated succesfully", @"Shared encryption key added/updated in login keychain.");
+                                
+                                [self.systemKeyRepository addKey:self.sharedKey
                                                       forLicense:licenseInfo
                                                          success:^() {
                                                              self.statusText = NSLocalizedString(@"Key updated succesfully", @"Shared encryption key Added/Updated Succesfully");
@@ -66,10 +66,10 @@
                                                            error:^(NSError *err) {
                                                                self.keyRepositoryError = err; 
                                                            }];
-                             }
-                               error:^(NSError *err) {
-                                   self.keyRepositoryError = err;
-                               }];
+                            }
+                              error:^(NSError *err) {
+                                  self.keyRepositoryError = err;
+                              }];
 }
 
 @end
