@@ -96,20 +96,39 @@ static void __XPC_Peer_Event_Handler(xpc_connection_t connection, xpc_object_t e
                                                   encoding:NSUTF8StringEncoding];
             
             NSError *err;
-            if(writeKey("com.physionconsulting.ovation", 
+            const char * service = "com.physionconsulting.ovation";
+            const char * ooqsPath = "/opt/object/mac86_64/bin/ooqs";
+            if(writeKey(service, 
                         [keyID cStringUsingEncoding:NSUTF8StringEncoding], 
                         [sharedKey cStringUsingEncoding:NSUTF8StringEncoding],
                         &err)) {
                 
-                syslog(LOG_INFO, "Sucesfully added key %s to system key chain", [keyID cStringUsingEncoding:NSUTF8StringEncoding]);
+                syslog(LOG_NOTICE, "Sucesfully added key to system key chain");
                 
-                xpc_object_t reply = xpc_dictionary_create_reply(event);
-                xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, true);
-                xpc_connection_send_message(remote, reply);
-                xpc_release(reply);
+                if(addACL([NSString stringWithFormat:NSLocalizedString(@"Ovation shared encryption key for %%@", @"Shared encryption key description template"), keyID], 
+                          service,
+                           [keyID cStringUsingEncoding:NSUTF8StringEncoding], ooqsPath, &err)) {
+                    
+                    syslog(LOG_NOTICE, "Sucesfully updated ACL for key");
+                    
+                    xpc_object_t reply = xpc_dictionary_create_reply(event);
+                    xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, true);
+                    xpc_connection_send_message(remote, reply);
+                    xpc_release(reply);
+                } else {
+                    syslog(LOG_ERR, "Unable to add ooqs ACL for system keychain item %s", [keyID cStringUsingEncoding:NSUTF8StringEncoding]);
+                    
+                    xpc_object_t reply = xpc_dictionary_create_reply(event);
+                    xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, false);
+                    xpc_dictionary_set_string(reply, RESULT_ERR_MSG_KEY, [[err localizedDescription] cStringUsingEncoding:NSUTF8StringEncoding]);
+                    xpc_connection_send_message(remote, reply);
+                    xpc_release(reply); 
+                }
+                
+                
                 
             } else {
-                syslog(LOG_ERR, "Unable to add key %s to system key chain", [keyID cStringUsingEncoding:NSUTF8StringEncoding]);
+                syslog(LOG_ERR, "Unable to add key to system key chain");
                 
                 xpc_object_t reply = xpc_dictionary_create_reply(event);
                 xpc_dictionary_set_bool(reply, RESULT_STATUS_KEY, false);

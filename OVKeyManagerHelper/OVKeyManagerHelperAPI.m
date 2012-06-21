@@ -25,9 +25,139 @@ const char * RESULT_ERR_MSG_KEY = "ovation-result-err-msg-key";
 
 const char * ADD_KEY_COMMAND = "ovation-add-key-command";
 
+BOOL addACL(NSString * itemDescription, const char * service, const char * keyID, const char * applicationPath, NSError * __autoreleasing *err)
+{
+    assert(itemDescription != nil);
+    
+    SecTrustedApplicationRef trustedApplication = NULL;
+    SecKeychainItemRef item = NULL;
+    SecAccessRef accessRef = NULL;
+    
+    OSStatus returnStatus = SecTrustedApplicationCreateFromPath(applicationPath, 
+                                                                &trustedApplication);
+    if(returnStatus != errSecSuccess) {
+        if(accessRef != NULL) {
+            CFRelease(accessRef);
+        }
+        if(trustedApplication != NULL) {
+            CFRelease(trustedApplication);
+        }
+        if(item != NULL) {
+            CFRelease(item);
+        }
+        
+        if(*err != NULL) {
+            NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
+            
+            *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
+                                       code:KEYCHAIN_ERROR
+                                   userInfo:[NSDictionary dictionaryWithObject:errMsg
+                                                                        forKey:NSLocalizedDescriptionKey]];
+        }
+        
+        return NO;
+    }
+    
+    
+    assert(trustedApplication != NULL);
+    
+    CFArrayRef trustedList = CFArrayCreate(NULL, (void*)&trustedApplication, 1, NULL);
+    returnStatus = SecAccessCreate((__bridge CFStringRef)itemDescription, trustedList, &accessRef);
+    CFRelease(trustedList);
+    
+    if(returnStatus != errSecSuccess) {
+        if(accessRef != NULL) {
+            CFRelease(accessRef);
+        }
+        if(trustedApplication != NULL) {
+            CFRelease(trustedApplication);
+        }
+        if(item != NULL) {
+            CFRelease(item);
+        }
+        
+        if(*err != NULL) {
+            NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
+            
+            *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
+                                       code:KEYCHAIN_ERROR
+                                   userInfo:[NSDictionary dictionaryWithObject:errMsg
+                                                                        forKey:NSLocalizedDescriptionKey]];
+        }
+        
+        return NO;
+    }
+    
+    assert(accessRef != NULL);
+    
+    UInt32 passwordLength;
+    void *passwordData;
+    returnStatus = SecKeychainFindGenericPassword(NULL, 
+                                                  strlen(service),
+                                                  service, 
+                                                  strlen(keyID), 
+                                                  keyID, 
+                                                  &passwordLength, 
+                                                  &passwordData, 
+                                                  &item);
+    
+    if(returnStatus == errSecItemNotFound) {
+        if(accessRef != NULL) {
+            CFRelease(accessRef);
+        }
+        if(trustedApplication != NULL) {
+            CFRelease(trustedApplication);
+        }
+        if(item != NULL) {
+            CFRelease(item);
+        }
+        
+        if(*err != NULL) {
+            NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
+            
+            *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
+                                       code:KEYCHAIN_ERROR
+                                   userInfo:[NSDictionary dictionaryWithObject:errMsg
+                                                                        forKey:NSLocalizedDescriptionKey]];
+        }
+        
+        return NO;
+    }
+    
+    assert(item != NULL);
+    assert(accessRef != NULL);
+    
+    returnStatus = SecKeychainItemSetAccess(item, accessRef);
+    if(returnStatus == errSecItemNotFound) {
+        if(accessRef != NULL) {
+            CFRelease(accessRef);
+        }
+        if(trustedApplication != NULL) {
+            CFRelease(trustedApplication);
+        }
+        if(item != NULL) {
+            CFRelease(item);
+        }
+        
+        if(*err != NULL) {
+            NSString *errMsg = (NSString*)CFBridgingRelease(SecCopyErrorMessageString(returnStatus, NULL));
+            
+            *err = [NSError errorWithDomain:OVATION_KEY_MANAGER_ERROR_DOMAIN 
+                                       code:KEYCHAIN_ERROR
+                                   userInfo:[NSDictionary dictionaryWithObject:errMsg
+                                                                        forKey:NSLocalizedDescriptionKey]];
+        }
+        
+        return NO;
+    }
+    
+    return YES;
+
+}
+
 BOOL writeKey(const char * service, const char * keyID, const char * key, NSError * __autoreleasing *err)
 {
-	SecKeychainItemRef item = nil;
+	SecKeychainItemRef item = NULL;
     UInt32 passwordLength;
     void *passwordData;
     

@@ -21,3 +21,4 @@ FOUNDATION_EXPORT const char * RESULT_STATUS_KEY;
 FOUNDATION_EXPORT const char * RESULT_ERR_MSG_KEY;
 
 FOUNDATION_EXPORT BOOL writeKey(const char * service, const char * keyID, const char * key, NSError * __autoreleasing *err);
+FOUNDATION_EXPORT BOOL addACL(NSString * itemDescription, const char * service, const char * keyID, const char * applicationPath, NSError * __autoreleasing *err);
